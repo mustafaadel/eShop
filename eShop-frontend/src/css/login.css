@@ -1,0 +1,26 @@
+/* Custom CSS for additional styling */
+.container {
+  max-width: 400px;
+}
+
+.card {
+  margin-top: 20px;
+}
+
+.card-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Center the button */
+.btn-primary {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Optional: Add more styles as needed */

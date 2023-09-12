@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:13 # You can specify the PostgreSQL version you prefer
+    environment:
+      POSTGRES_DB: atom
+      POSTGRES_USER: atom
+      POSTGRES_PASSWORD: atom
+    ports:
+      - "5432:5432" # Map the container's port 5432 to your host machine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persist data in a volume
+
+volumes:
+  postgres_data: # Define a named volume for PostgreSQL data storage
