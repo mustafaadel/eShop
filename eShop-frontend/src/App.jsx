@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import EditProduct from "./pages/EditProduct";
+import Requests from "./pages/Requests";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
                   path="edit/:id/"
                   element={<EditProduct />}
                 />
+                <Route index={false} path="requests/" element={<Requests />} />
               </Route>
             </Route>
             <Route path="login/" element={<Login />} />

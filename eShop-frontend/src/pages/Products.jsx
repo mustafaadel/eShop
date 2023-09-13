@@ -94,6 +94,58 @@ function Products() {
         }
       });
   };
+  const makeOrder = async (id) => {
+    await api
+      .post(`/maker-delivery/${id}/`)
+      .then((res) => {
+        if (res.status === 201) {
+          Swal.fire({
+            title: "Order Placed Successfully",
+            icon: "success",
+            confirmButtonText: "Ok",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              getProducts();
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          Swal.fire({
+            title: "Unauthorized",
+            icon: "error",
+            confirmButtonText: "Ok",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              logoutUser();
+            }
+          });
+        } else if (err.response.status === 403) {
+          Swal.fire({
+            title: "Forbidden",
+            icon: "error",
+            confirmButtonText: "Ok",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              logoutUser();
+            }
+          });
+        } else if (err.response.status === 400) {
+          Swal.fire({
+            title: "Bad Request",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        } else if (err.response.status === 500) {
+          Swal.fire({
+            title: "Internal Server Error",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        }
+      });
+  };
 
   useEffect(() => {
     getProducts();
@@ -108,6 +160,13 @@ function Products() {
           Add Product
         </Link>
       )}
+      <br />
+      {user &&
+        userPermissions.includes("api.can_execute_delivery_requests") && (
+          <Link to={"requests/"} className="btn btn-success mt-3">
+            Execute Requests
+          </Link>
+        )}
       <table className="table table-striped-columns mt-5 products-table">
         <thead>
           <tr>
@@ -150,6 +209,19 @@ function Products() {
                         }}
                       >
                         Delete
+                      </button>
+                    )}
+                  {user &&
+                    userPermissions.includes(
+                      "api.can_make_delivery_requests"
+                    ) && (
+                      <button
+                        className="btn btn-warning btn-sm mb-2"
+                        onClick={() => {
+                          makeOrder(product.id);
+                        }}
+                      >
+                        Make
                       </button>
                     )}
                 </td>

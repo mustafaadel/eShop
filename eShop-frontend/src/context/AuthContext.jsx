@@ -51,20 +51,21 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getUserPermissions = async () => {
-    await fetch("http://127.0.0.1:8000/api/user-permissions/", {
+    const res = await fetch("http://127.0.0.1:8000/api/user-permissions/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${authTokens.access}`,
       },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUserPermissions(data.permissions);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    });
+    let data = await res.json();
+    if (res.status === 200) {
+      setUserPermissions(data.permissions);
+    } else if (res.status === 401) {
+      logoutUser();
+    } else {
+      console.log(data);
+    }
   };
 
   let contextData = {
