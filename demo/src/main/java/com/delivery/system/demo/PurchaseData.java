@@ -1,6 +1,6 @@
 package com.delivery.system.demo;
 import jakarta.persistence.*;
-import java.util.Objects;
+
 @Entity(name="purchase_data")
 public class PurchaseData {
     @Id

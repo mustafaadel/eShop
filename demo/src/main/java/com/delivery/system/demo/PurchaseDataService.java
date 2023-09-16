@@ -1,14 +1,7 @@
 package com.delivery.system.demo;
-// import org.springframework.web.client.RestTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.http.HttpEntity;
-// import org.springframework.http.HttpHeaders;
-// import org.springframework.http.HttpMethod;
-// import org.springframework.http.ResponseEntity;
-// import org.springframework.http.converter.StringHttpMessageConverter;
-// import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-// import org.springframework.web.client.HttpClientErrorException;
+
 import java.util.List;
 
 @Service
