@@ -32,12 +32,14 @@ def getAllProducts(request):
 @permission_classes([IsAuthenticated])
 @permission_required('api.can_add_product' , raise_exception=True)
 def createProduct(request):
+# save product to database
         serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
                 serializer.save()
+                return Response(serializer.data , status=status.HTTP_201_CREATED)
         else:
                 return Response(serializer.errors , status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.data , status=status.HTTP_201_CREATED)
+        
 
 
 @api_view(['GET'])
@@ -105,7 +107,7 @@ def makeDeliveryRequest(request, pk):
                         'status': 'pending',
                         'requestid': serializer.data['id'],
                 }
-                res = requests.post('http://localhost:8080/api/add', json=data , headers={'Content-Type': 'application/json'})  
+                res = requests.post('http://app:8080/api/add', json=data , headers={'Content-Type': 'application/json'})  
                 if res.status_code == 200:
                         return Response(serializer.data, status=status.HTTP_201_CREATED)
                 else:
@@ -127,7 +129,7 @@ def executeDeliveryRequest(request, pk ):
                         'status': stat,
                 }
                 # send delivery request to delivery service
-                res = requests.put(f'http://localhost:8080/api/update/{pk}', json=data , headers={'Content-Type': 'application/json'})
+                res = requests.put(f'http://app:8080/api/update/{pk}', json=data , headers={'Content-Type': 'application/json'})
                 if res.status_code == 200:
                         return Response({'message':'Delivery request updated successfully'} , status=status.HTTP_200_OK)
                 else:
